@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff8fb">
+  <meta name="description" content="Organize seus objetivos por áreas da vida e acompanhe seu progresso.">
+  <title>Órbita — organize sua vida</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Navegação principal">
+      <a class="brand" href="#" aria-label="Órbita, início">
+        <span class="brand-mark" aria-hidden="true">◎</span>
+        <span>ÓRBITA</span>
+      </a>
+      <p class="side-label">Seu espaço</p>
+      <nav class="nav-list" aria-label="Eixos da vida">
+        <a class="nav-link active" href="#inicio" data-axis-link="all"><span class="nav-icon" aria-hidden="true">⌂</span><span>Visão geral</span></a>
+        <a class="nav-link" href="#qualidade" data-axis-link="qualidade"><span class="nav-icon" aria-hidden="true">◉</span><span>Qualidade de Vida</span><span class="nav-count" data-count="qualidade">0</span></a>
+        <a class="nav-link" href="#pessoal" data-axis-link="pessoal"><span class="nav-icon" aria-hidden="true">✦</span><span>Pessoal</span><span class="nav-count" data-count="pessoal">0</span></a>
+        <a class="nav-link" href="#profissional" data-axis-link="profissional"><span class="nav-icon" aria-hidden="true">⌘</span><span>Profissional</span><span class="nav-count" data-count="profissional">0</span></a>
+        <a class="nav-link" href="#relacionamento" data-axis-link="relacionamento"><span class="nav-icon" aria-hidden="true">♡</span><span>Relacionamento</span><span class="nav-count" data-count="relacionamento">0</span></a>
+      </nav>
+      <div class="sidebar-bottom">
+        <strong>Um passo de cada vez.</strong>
+        Pequenas escolhas criam grandes mudanças.
+      </div>
+    </aside>
+
+    <main id="inicio">
+      <div class="topbar">
+        <div class="breadcrumb">Meu espaço <span>/</span> Visão geral</div>
+        <div class="topbar-right">
+          <span class="today" id="today"></span>
+          <div class="avatar" aria-label="Seu perfil">EU</div>
+        </div>
+      </div>
+
+      <div class="content">
+        <header class="hero">
+          <div>
+            <p class="eyebrow">Seu mapa pessoal</p>
+            <h1>Uma vida com intenção.</h1>
+            <p class="hero-copy">Organize o que importa. Acompanhe cada passo do seu caminho.</p>
+          </div>
+          <button class="button-primary" id="open-modal" type="button"><span class="plus" aria-hidden="true">+</span> Nova meta</button>
+        </header>
+
+        <section class="overview" aria-label="Resumo das metas">
+          <article class="stat-card">
+            <p class="stat-label">Metas no seu mapa</p>
+            <div class="stat-bottom"><span class="stat-value" id="total-goals">0</span><span class="stat-hint">em todos os eixos</span></div>
+          </article>
+          <article class="stat-card">
+            <p class="stat-label">Concluídas</p>
+            <div class="stat-bottom"><span class="stat-value" id="completed-goals">0</span><span class="stat-hint good" id="completion-hint">cada passo conta</span></div>
+          </article>
+          <article class="stat-card">
+            <p class="stat-label">Progresso geral</p>
+            <div class="stat-bottom"><span class="stat-value" id="progress-value">0%</span><span class="stat-hint">no seu ritmo</span></div>
+          </article>
+        </section>
+
+        <section aria-labelledby="axes-heading">
+          <div class="section-heading">
+            <div>
+              <h2 id="axes-heading">Seus eixos</h2>
+              <p>Uma visão clara de cada parte da sua vida.</p>
+            </div>
+          </div>
+          <div class="axis-grid" id="axis-grid"></div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <div class="overlay" id="goal-modal" hidden>
+    <section class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialog-title" aria-describedby="dialog-description">
+      <div class="dialog-header">
+        <div>
+          <h2 id="dialog-title">Uma nova intenção</h2>
+          <p id="dialog-description">Defina seu próximo passo e escolha onde ele pertence.</p>
+        </div>
+        <button class="icon-button" id="close-modal" type="button" aria-label="Fechar">×</button>
+      </div>
+      <form id="goal-form" novalidate>
+        <div class="form-field">
+          <label for="goal-name">Nome da meta</label>
+          <input id="goal-name" name="name" type="text" maxlength="100" placeholder="Ex.: caminhar três vezes por semana" autocomplete="off" required>
+        </div>
+        <div class="form-field">
+          <label for="goal-axis">Eixo da vida</label>
+          <select id="goal-axis" name="axis" required>
+            <option value="qualidade">Qualidade de Vida</option>
+            <option value="pessoal">Pessoal</option>
+            <option value="profissional">Profissional</option>
+            <option value="relacionamento">Relacionamento</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label for="goal-horizon">Prazo</label>
+          <select id="goal-horizon" name="horizon" required>
+            <option value="curto">Curto Prazo</option>
+            <option value="medio">Médio Prazo</option>
+            <option value="longo">Longo Prazo</option>
+          </select>
+        </div>
+        <p class="form-error" id="form-error" role="alert"></p>
+        <div class="form-actions">
+          <button class="button-secondary" id="cancel-modal" type="button">Cancelar</button>
+          <button class="button-primary" type="submit">Adicionar meta</button>
+        </div>
+      </form>
+    </section>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
